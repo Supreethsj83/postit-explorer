@@ -1,0 +1,10 @@
+<Window x:Class="PostItExplorer.Views.HiddenBootstrapper"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Width="0" Height="0"
+        Visibility="Hidden"
+        Loaded="Window_Loaded">
+</Window>
