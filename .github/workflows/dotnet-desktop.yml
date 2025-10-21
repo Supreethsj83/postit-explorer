@@ -1,37 +1,9 @@
-name: Build Windows EXE
-
-on:
-  workflow_dispatch: {}
-  push:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Restore dependencies (force NuGet.org)
+      - name: Restore dependencies
+        shell: pwsh
         run: |
-          dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org -Force
+          dotnet nuget locals all --clear
+          if (-not (dotnet nuget list source | Select-String -Pattern 'nuget.org')) {
+            dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+          }
           $proj = (Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1).FullName
-          dotnet restore "$proj"
-
-      - name: Publish self-contained win-x64 (Release)
-        run: |
-          $proj = (Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1).FullName
-          dotnet publish "$proj" -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:EnableWindowsTargeting=true
-
-      - name: Upload EXE artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: postit-explorer
-          path: |
-            **/bin/Release/**/win-x64/publish/**
+          dotnet restore "$proj" --no-cache
