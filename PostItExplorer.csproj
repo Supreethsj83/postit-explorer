@@ -10,14 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3337" />
-    <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.63.0" />
-    <PackageReference Include="Microsoft.Graph" Version="5.57.0" />
-    <PackageReference Include="Azure.Identity" Version="1.*" />
-
-  </ItemGroup>
+  <!-- Microsoft Graph (single line only) -->
+  <PackageReference Include="Microsoft.Graph" Version="5.57.0" />
+  <!-- Auth stack -->
+  <PackageReference Include="Azure.Identity" Version="1.17.0" />
+  <PackageReference Include="Microsoft.Identity.Client" Version="4.76.0" />
+  <!-- Google Drive (version here is fine even if NuGet chooses a newer patch) -->
+  <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3373" />
+</ItemGroup>
 
 </Project>
