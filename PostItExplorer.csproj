@@ -12,6 +12,7 @@
   <ItemGroup>
   <!-- Microsoft Graph (single line only) -->
   <PackageReference Include="Microsoft.Graph" Version="5.57.0" />
+  <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.8" />
   <!-- Auth stack -->
   <PackageReference Include="Azure.Identity" Version="1.17.0" />
   <PackageReference Include="Microsoft.Identity.Client" Version="4.76.0" />
