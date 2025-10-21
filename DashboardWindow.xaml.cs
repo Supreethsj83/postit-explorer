@@ -39,7 +39,7 @@ namespace PostItExplorer.Views
         {
             if ((sender as Button)?.DataContext is Note n && !string.IsNullOrEmpty(n.Path))
             {
-                var psi = new ProcessStartInfo("explorer.exe", $"/select,\""{n.Path}\"" )
+                var psi = new ProcessStartInfo("explorer.exe", $"/select,\"{n.Path}\"")
                 {
                     UseShellExecute = true
                 };
