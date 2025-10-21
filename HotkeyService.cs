@@ -11,7 +11,7 @@ namespace PostItExplorer.Services
 
         // Rename the native import to avoid name clash
         [DllImport("user32.dll", EntryPoint = "RegisterHotKey", SetLastError = true)]
-        private static extern bool NativeRegisterHotKey(IntPtr hWnd, int id, int fsModifiers, uint vk);
+        private static extern bool HotkeyService.Register(IntPtr hWnd, int id, int fsModifiers, uint vk);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
@@ -21,7 +21,7 @@ namespace PostItExplorer.Services
         {
             // ignore failure of Unregister if not previously registered
             UnregisterHotKey(handle, id);
-            return NativeHotkeyService.Register(handle, id, modifiers, key);
+            return HotkeyService.Register(handle, id, modifiers, key);
         }
     }
 }
