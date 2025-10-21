@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -10,14 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-  <!-- Microsoft Graph (single line only) -->
-  <PackageReference Include="Microsoft.Graph" Version="5.57.0" />
-  <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.5" />
-  <!-- Auth stack -->
-  <PackageReference Include="Azure.Identity" Version="1.17.0" />
-  <PackageReference Include="Microsoft.Identity.Client" Version="4.76.0" />
-  <!-- Google Drive (version here is fine even if NuGet chooses a newer patch) -->
+  <!-- Microsoft Graph v4 (fluent API your code uses) -->
+  <PackageReference Include="Microsoft.Graph" Version="4.54.0" />
+  <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.9" />
+
+  <!-- MSAL packages compatible with v4 + token cache helpers -->
+  <PackageReference Include="Microsoft.Identity.Client" Version="4.63.0" />
+  <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.63.0" />
+
+  <!-- Google Drive (keep) -->
   <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3373" />
-  </ItemGroup>
+
+  <!-- Tray icon (works fine with WPF; warning NU1701 is OK) -->
+  <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.5" />
+</ItemGroup>
 
 </Project>
