@@ -1,3 +1,32 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          # Try .NET 8. If your project targets 6/7, the restore will still work;
+          # we will adjust if needed after the first run.
+          dotnet-version: '8.0.x'
+
+      - name: Locate a C# project
+        shell: pwsh
+        run: |
+          $proj = (Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1).FullName
+          if (-not $proj) { throw "No .csproj found in the repo." }
+          "PROJECT=$proj" | Out-File -FilePath $env:GITHUB_ENV -Append
+
       - name: Restore dependencies
         shell: pwsh
         run: |
@@ -5,5 +34,19 @@
           if (-not (dotnet nuget list source | Select-String -Pattern 'nuget.org')) {
             dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
           }
-          $proj = (Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1).FullName
-          dotnet restore "$proj" --no-cache
+          dotnet restore "$env:PROJECT" --no-cache
+
+      - name: Publish self-contained win-x64 (Release)
+        shell: pwsh
+        run: |
+          dotnet publish "$env:PROJECT" -c Release -r win-x64 --self-contained true `
+            /p:PublishSingleFile=true `
+            /p:IncludeNativeLibrariesForSelfExtract=true `
+            /p:EnableWindowsTargeting=true
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: postit-explorer
+          path: |
+            **/bin/Release/**/win-x64/publish/**
