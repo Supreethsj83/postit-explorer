@@ -12,13 +12,12 @@
   <ItemGroup>
   <!-- Microsoft Graph (single line only) -->
   <PackageReference Include="Microsoft.Graph" Version="5.57.0" />
-  <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.8" />
+  <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.5" />
   <!-- Auth stack -->
   <PackageReference Include="Azure.Identity" Version="1.17.0" />
   <PackageReference Include="Microsoft.Identity.Client" Version="4.76.0" />
   <!-- Google Drive (version here is fine even if NuGet chooses a newer patch) -->
   <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3373" />
-  <PackageReference Include="Hardcodet.Wpf.TaskbarNotification" Version="1.0.8" />
-</ItemGroup>
+  </ItemGroup>
 
 </Project>
