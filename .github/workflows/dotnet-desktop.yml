@@ -18,23 +18,16 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Find a C# project
-        shell: pwsh
+      - name: Restore dependencies (force NuGet.org)
         run: |
+          dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org -Force
           $proj = (Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1).FullName
-          if (-not $proj) { throw "No .csproj found in the repo." }
-          "PROJECT=$proj" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-      - name: Restore
-        run: dotnet restore "$env:PROJECT"
+          dotnet restore "$proj"
 
       - name: Publish self-contained win-x64 (Release)
-        run: >
-          dotnet publish "$env:PROJECT"
-          -c Release -r win-x64 --self-contained true
-          /p:PublishSingleFile=true
-          /p:IncludeNativeLibrariesForSelfExtract=true
-          /p:EnableWindowsTargeting=true
+        run: |
+          $proj = (Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1).FullName
+          dotnet publish "$proj" -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:EnableWindowsTargeting=true
 
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
