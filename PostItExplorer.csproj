@@ -12,7 +12,7 @@
   <ItemGroup>
   <!-- Microsoft Graph v4 (fluent API your code uses) -->
   <PackageReference Include="Microsoft.Graph" Version="4.54.0" />
-  <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.9" />
+  <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.7" />
 
   <!-- MSAL packages compatible with v4 + token cache helpers -->
   <PackageReference Include="Microsoft.Identity.Client" Version="4.63.0" />
