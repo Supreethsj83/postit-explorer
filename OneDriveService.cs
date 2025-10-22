@@ -30,9 +30,7 @@ namespace PostItExplorer.Services
                     .WithUseEmbeddedWebView(false)
                     .ExecuteAsync();
 
-                var cache = (await _pca.UserTokenCache.SerializeMsalV3Async()).ToArray();
-                SecretsService.SetMsCache(cache);
-
+                
                 _graph = new GraphServiceClient(new DelegateAuthenticationProvider(async req =>
                 {
                     var accounts = await _pca.GetAccountsAsync();
