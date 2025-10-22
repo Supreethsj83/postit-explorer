@@ -13,7 +13,7 @@ namespace PostItExplorer.Services
         private static extern bool NativeRegisterHotKey(IntPtr hWnd, int id, int fsModifiers, uint vk);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        public static extern bool NativUnregisterHotKey(IntPtr hWnd, int id);
 
         public static bool Register(IntPtr handle, int id, int modifiers, uint key)
         {
