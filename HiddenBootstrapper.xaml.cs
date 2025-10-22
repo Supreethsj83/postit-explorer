@@ -22,7 +22,7 @@ namespace PostItExplorer.Views
             _windowHandle = new System.Windows.Interop.WindowInteropHelper(this).Handle;
             _source = HwndSource.FromHwnd(_windowHandle);
             _source.AddHook(WndProc);
-            HotkeyService.RegisterHotKey(_windowHandle, HotkeyService.HOTKEY_ID, HotkeyService.MOD_CONTROL, (uint)System.Windows.Input.KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.Space));
+            HotkeyService.Register(_windowHandle, HotkeyService.HOTKEY_ID, HotkeyService.MOD_CONTROL, (uint)System.Windows.Input.KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.Space));
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -52,7 +52,7 @@ namespace PostItExplorer.Views
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            HotkeyService.UnregisterHotKey(_windowHandle, HotkeyService.HOTKEY_ID);
+            HotkeyService.Unregister(_windowHandle, HotkeyService.HOTKEY_ID);
             _source?.Dispose();
             _sync?.Stop();
         }
